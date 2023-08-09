@@ -11,6 +11,10 @@
 		2902AA092A8396380023E2AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2902AA082A8396380023E2AA /* ContentView.swift */; };
 		2902AA0B2A8396390023E2AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2902AA0A2A8396390023E2AA /* Assets.xcassets */; };
 		2902AA0E2A8396390023E2AA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2902AA0D2A8396390023E2AA /* Preview Assets.xcassets */; };
+		295E570F2A8399B6006145F4 /* creditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295E570E2A8399B6006145F4 /* creditor.swift */; };
+		295E57112A8399F0006145F4 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295E57102A8399F0006145F4 /* ResultsView.swift */; };
+		295E57132A839A14006145F4 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295E57122A839A14006145F4 /* extension.swift */; };
+		295E57152A839A33006145F4 /* comission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295E57142A839A33006145F4 /* comission.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,10 @@
 		2902AA0A2A8396390023E2AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2902AA0D2A8396390023E2AA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2902AA0F2A8396390023E2AA /* CreditFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CreditFlow.entitlements; sourceTree = "<group>"; };
+		295E570E2A8399B6006145F4 /* creditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = creditor.swift; sourceTree = "<group>"; };
+		295E57102A8399F0006145F4 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		295E57122A839A14006145F4 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
+		295E57142A839A33006145F4 /* comission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +65,10 @@
 				2902AA0A2A8396390023E2AA /* Assets.xcassets */,
 				2902AA0F2A8396390023E2AA /* CreditFlow.entitlements */,
 				2902AA0C2A8396390023E2AA /* Preview Content */,
+				295E570E2A8399B6006145F4 /* creditor.swift */,
+				295E57102A8399F0006145F4 /* ResultsView.swift */,
+				295E57122A839A14006145F4 /* extension.swift */,
+				295E57142A839A33006145F4 /* comission.swift */,
 			);
 			path = CreditFlow;
 			sourceTree = "<group>";
@@ -140,6 +152,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2902AA092A8396380023E2AA /* ContentView.swift in Sources */,
+				295E57112A8399F0006145F4 /* ResultsView.swift in Sources */,
+				295E570F2A8399B6006145F4 /* creditor.swift in Sources */,
+				295E57132A839A14006145F4 /* extension.swift in Sources */,
+				295E57152A839A33006145F4 /* comission.swift in Sources */,
 				2902AA072A8396380023E2AA /* CreditFlowApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
