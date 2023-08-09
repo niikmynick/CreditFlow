@@ -87,6 +87,10 @@ struct ContentView: View {
     
     private func calculate() {
         
+//        for i in 0...creditors.count - 1 {
+//            print(creditors[i])
+//        }
+        
 //      clear previous data
         total_creditorsGet = 0
         debt_sum = 0
@@ -232,12 +236,7 @@ struct ContentView: View {
                                 
                                 HStack {
                                     Text("Сумма долга")
-                                    TextField("Сумма долга", value: $creditors[index].value, formatter: NumberFormatter(), onCommit: {
-                                            DispatchQueue.main.async {
-                                                NSApp.keyWindow?.makeFirstResponder(nil)
-                                            }
-                                    }
-                                    )
+                                    TextField("Сумма долга", value: $creditors[index].value, format: .number)
                                     .textFieldStyle(.roundedBorder)
                                 }
                                 .padding(.horizontal)
@@ -251,24 +250,14 @@ struct ContentView: View {
                                 if creditors[index].com_type == .percent {
                                     HStack {
                                         Text("Проценты")
-                                        TextField("Проценты", value: $creditors[index].percentOrFee, formatter: NumberFormatter(), onCommit: {
-                                            DispatchQueue.main.async {
-                                                NSApp.keyWindow?.makeFirstResponder(nil)
-                                            }
-                                        }
-                                        )
+                                        TextField("Проценты", value: $creditors[index].percentOrFee, format: .number)
                                             .textFieldStyle(.roundedBorder)
                                     }
                                     .padding(.horizontal)
                                 } else {
                                     HStack {
                                         Text("Сумма")
-                                        TextField("Сумма", value: $creditors[index].percentOrFee, formatter: NumberFormatter(), onCommit: {
-                                            DispatchQueue.main.async {
-                                                NSApp.keyWindow?.makeFirstResponder(nil)
-                                            }
-                                        }
-                                        )
+                                        TextField("Сумма", value: $creditors[index].percentOrFee, format: .number)
                                             .textFieldStyle(.roundedBorder)
                                     }
                                     .padding(.horizontal)
