@@ -40,24 +40,32 @@ struct ResultsView: View {
                 Text("Сумма средств к распределению: \(cash!.formatted(.number))")
                 Text("Сумма погашения требований: \(total_creditorsGet.rounded(toPlaces: 2).formatted(.number))")
             }
+            
+            Spacer()
 
             Section(header: Text("Доли кредиторов")) {
                 ForEach(ratio.sorted(by: <), id: \.key) { key, value in
                     Text("\(key): \(value.rounded(toPlaces: 4).formatted(.percent))")
                 }
             }
+            
+            Spacer()
 
             Section(header: Text("Размеры погашения требований")) {
                 ForEach(creditorsGet.sorted(by: <), id: \.key) { key, value in
                     Text("\(key): \(value.rounded(toPlaces: 2).formatted(.number))")
                 }
             }
+            
+            Spacer()
 
             Section(header: Text("Размеры комиссий")) {
                 ForEach(totalFees.sorted(by: <), id: \.key) { key, value in
                     Text("\(key): \(value.rounded(toPlaces: 2).formatted(.number))")
                 }
             }
+            
+            Spacer()
 
             Section(header: Text("Переводы с учетом комиссий")) {
                 ForEach(bankPayments.sorted(by: <), id: \.key) { key, value in

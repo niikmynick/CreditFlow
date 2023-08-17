@@ -27,18 +27,38 @@ struct ContentView: View {
     @State private var isErrorShown = false
     @State private var errorMessage = ""
     
+    @FocusState private var focusedField: Int?
+    
         
     private func addCreditor() {
-        creditors.append(Creditor(name: "", value: 0, com_type: .percent, percentOrFee: 0))
+        creditors.append(Creditor(name: "", value: nil, com_type: .percent, percentOrFee: nil))
     }
     
     private func deleteCreditor(at index: Int) {
-        creditors.remove(at: index)
+        if creditors.indices.contains(index) {
+            if focusedField != nil && focusedField! == index {
+                errorMessage = "Перед удалением объекта необходимо завершить его изменение. (Для подтверждения введенной информации использовать клавишу Enter)"
+                isErrorShown = true
+                focusedField = nil
+            } else {
+                creditors.remove(at: index)
+            }
+            
+        } else {
+            errorMessage = "Возникла внутрення ошибка. Попробуйте еще раз"
+            isErrorShown = true
+        }
     }
     
     private func clearAll() {
-        cash = nil
-        creditors = []
+        if focusedField != nil && creditors.indices.contains(focusedField!) {
+            errorMessage = "Перед удалением всех объектов необходимо завершить изменения. (Для подтверждения введенной информации использовать клавишу Enter)"
+            isErrorShown = true
+            focusedField = nil
+        } else {
+            cash = nil
+            creditors = []
+        }
     }
     
     private func validate() -> Bool {
@@ -58,25 +78,25 @@ struct ContentView: View {
         for creditor in creditors {
             
 //            all info about creditors
-            if creditor.name.isEmpty {
+            if creditor.name.isEmpty || creditor.percentOrFee == nil || creditor.value == nil {
                 errorMessage = "Для некоторых кредиторов отсутствует необходимая информация"
                 return false
             }
             
 //            percents above 100
             if creditor.com_type == .percent {
-                if creditor.percentOrFee > 100 {
+                if creditor.percentOrFee! > 100 {
                     errorMessage = "Комиссия для перевода кредитору \(creditor.name) превышает допустимое значение в \(100.formatted(.percent))"
                     return false
                 }
-                if creditor.percentOrFee < 0 {
+                if creditor.percentOrFee! < 0 {
                     errorMessage = "Комиссия для перевода кредитору \(creditor.name) ниже допустимого значения в \(0.formatted(.percent))"
                     return false
                 }
             }
             
 //            too low debt
-            if creditor.value < 0 {
+            if creditor.value! < 0 {
                 errorMessage = "Долг кредитору \(creditor.name) не может быть менее \(0.formatted(.number))"
                 return false
             }
@@ -170,7 +190,7 @@ struct ContentView: View {
                     .font(.title)
                     .fontWeight(.bold)
                 
-                HStack {
+                HStack(spacing: 20) {
                     Text("Размер конкурсной массы")
                     TextField("Размер конкурсной массы должника", value: $cash, format: .number)
                         .textFieldStyle(.roundedBorder)
@@ -218,47 +238,78 @@ struct ContentView: View {
                         GridItem(.flexible(minimum: 200), spacing: 20),
                     ], spacing: 20) {
                         ForEach(creditors.indices, id: \.self) { index in
+                            
+                            let creditor = $creditors[index]
+                            
                             VStack {
                                 HStack {
-                                    Text("Имя кредитора")
                                     Spacer()
-                                    TextField("Имя кредитора", text: $creditors[index].name, onCommit: {
-                                        DispatchQueue.main.async {
-                                            NSApp.keyWindow?.makeFirstResponder(nil)
-                                        }
-                                        
-                                    }
-                                    )
+                                    
+                                    Text("Имя кредитора")
+                                    
+                                    Spacer()
+                                    
+                                    TextField("Имя кредитора", text: creditor.name)
                                         .textFieldStyle(.roundedBorder)
+                                        .focused($focusedField, equals: index)
+                                    
+                                    Spacer()
                                 }
                                 .padding(.horizontal)
                                 .multilineTextAlignment(.leading)
                                 
                                 HStack {
+                                    Spacer()
+                                    
                                     Text("Сумма долга")
-                                    TextField("Сумма долга", value: $creditors[index].value, format: .number)
+                                    
+                                    Spacer()
+                                    
+                                    TextField("Сумма долга", value: creditor.value, format: .number)
                                     .textFieldStyle(.roundedBorder)
+                                    .focused($focusedField, equals: index)
+                                    
+                                    Spacer()
                                 }
                                 .padding(.horizontal)
                                 
-                                Picker("Вид комиссии", selection: $creditors[index].com_type) {
+                                
+                                Picker("", selection: creditor.com_type) {
                                     Text("Процент").tag(Comission.percent)
                                     Text("Фиксированная плата").tag(Comission.fee)
                                 }
-                                .pickerStyle(.segmented)
+                                .pickerStyle(.menu)
+
                                 
                                 if creditors[index].com_type == .percent {
                                     HStack {
+                                        Spacer()
+                                        
                                         Text("Проценты")
-                                        TextField("Проценты", value: $creditors[index].percentOrFee, format: .number)
+                                        
+                                        Spacer()
+                                        
+                                        TextField("Проценты", value: creditor.percentOrFee, format: .number)
                                             .textFieldStyle(.roundedBorder)
+                                            .focused($focusedField, equals: index)
+                                        
+                                        Spacer()
                                     }
                                     .padding(.horizontal)
+                                    
                                 } else {
                                     HStack {
+                                        Spacer()
+                                        
                                         Text("Сумма")
-                                        TextField("Сумма", value: $creditors[index].percentOrFee, format: .number)
+                                        
+                                        Spacer()
+                                        
+                                        TextField("Сумма", value: creditor.percentOrFee, format: .number)
                                             .textFieldStyle(.roundedBorder)
+                                            .focused($focusedField, equals: index)
+                                        
+                                        Spacer()
                                     }
                                     .padding(.horizontal)
                                 }
@@ -266,6 +317,13 @@ struct ContentView: View {
                                 Button("Удалить", action: { deleteCreditor(at: index) })
                                     .buttonStyle(.borderedProminent)
                                     .tint(.red)
+                                    .alert(isPresented: $isErrorShown) {
+                                        Alert(
+                                            title: Text("Ошибка"),
+                                            message: Text(errorMessage),
+                                            dismissButton: .default(Text("ОК"))
+                                        )
+                                    }
                             }
                             .padding()
                             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray))

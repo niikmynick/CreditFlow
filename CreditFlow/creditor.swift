@@ -8,13 +8,14 @@
 import Foundation
 
 
-struct Creditor {
+struct Creditor: Identifiable {
+    var id = UUID()
     var name: String
-    var value: Double
+    var value: Double?
     var com_type: Comission
-    var percentOrFee: Double
+    var percentOrFee: Double?
     
-    init(name: String, value: Double, com_type: Comission, percentOrFee: Double) {
+    init(name: String, value: Double?, com_type: Comission, percentOrFee: Double?) {
         self.name = name
         self.value = value
         self.com_type = com_type
